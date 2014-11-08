@@ -56,21 +56,7 @@ var xyutil={
 			this.setValueIfNull(param, "type", "POST");
 			this.setValueIfNull(param, "error", function(st){xyutil.alert("ajax请求返回状态错误!\n"+st);});
 			param.traditional=true;
-			var oldSuccFunc=param.success;
-			param.success=function(data, textStatus, jqXHR){
-				//检查是否登录
-				if(jqXHR.getResponseHeader("shop_login_expired")=="1"){
-					alert("超时，请重新登录");
-					document.location.href="/login.jsp";
-					//xyutil.alert({"msg":"超时，请重新登录", "ok_callback":function(){document.location.href="/login.jsp";}});
-				}else if(jqXHR.getResponseHeader("shop_user_no_authority")==1){
-					alert("无此权限，请联系店铺管理员分配!");
-					//xyutil.alert({"msg":"您没有权限进行当前操作"});
-				}else{
-					oldSuccFunc.apply(this, arguments);
-				}
-			}
-			$.ajax(param);
+			jQuery.ajax(param);
 		}
 	},
 	createBox:function(config){
